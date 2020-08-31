@@ -1,0 +1,26 @@
+name: Test
+
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run:  composer validate
+
+    - name: Build PHP containers
+      run:  docker-compose -f docker-compose.yml up -d --build php
+
+    - name: Install dependencies
+      run:  docker-compose run -w /application php composer install --prefer-dist --no-progress --no-suggest
+      
