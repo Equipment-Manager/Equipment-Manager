@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  web-server:
+  web:
     image: nginx:1.19-alpine
     container_name: ${APP_NAME}-webserver
     working_dir: /application
@@ -12,8 +12,13 @@ services:
     ports:
       - 8080:80
     restart: always
-  php-fpm:
-    build: ./docker/php
+
+  php:
+    build: 
+      context: ./docker/php
+      dockerfile: Dockerfile
+      args: 
+        COMPOSER_VERSION: ${COMPOSER_VERSION}
     image: ${APP_NAME}-php
     container_name: ${APP_NAME}-api
     working_dir: /application
@@ -22,6 +27,7 @@ services:
     networks:
       - equipment-manager
     restart: always
+
   database:
     image: mysql:5.7
     container_name: ${APP_NAME}-database
