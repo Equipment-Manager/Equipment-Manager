@@ -1,25 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
+use App\Exceptions\User\UserAuthenticatedException;
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\AuthManager;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
-     */
-    public function handle($request, Closure $next, $guard = null)
+    protected AuthManager $manager;
+
+    public function __construct(AuthManager $manager)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+        $this->manager = $manager;
+    }
+
+    public function handle(Request $request, Closure $next, string $guard = null): Response
+    {
+        if ($this->manager->guard($guard)->check()) {
+            throw new UserAuthenticatedException();
         }
 
         return $next($request);
