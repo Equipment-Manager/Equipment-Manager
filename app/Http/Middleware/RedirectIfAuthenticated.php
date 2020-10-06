@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
         $this->manager = $manager;
     }
 
-    public function handle(Request $request, Closure $next, string $guard = null): Response
+    public function handle(Request $request, Closure $next, ?string $guard = null): Response
     {
         if ($this->manager->guard($guard)->check()) {
             throw new UserAuthenticatedException();
