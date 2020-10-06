@@ -5,7 +5,9 @@ declare(strict_types=1);
 use Illuminate\Support\Str;
 
 $prefix = Str::slug(env("APP_NAME", "laravel"), "_") . "_database_";
-$options = extension_loaded("pdo_mysql") ? array_filter([PDO::MYSQL_ATTR_SSL_CA => env("MYSQL_ATTR_SSL_CA")]) : [];
+$options = extension_loaded("pdo_mysql") ? array_filter([
+    PDO::MYSQL_ATTR_SSL_CA => env("MYSQL_ATTR_SSL_CA"),
+]) : [];
 
 return [
     "default" => env("DB_CONNECTION", "mysql"),
