@@ -1,0 +1,9 @@
+default:
+    extensions:
+        KrzysztofRewak\Larahat\BehatExtension:
+            env: ".env.behat"
+
+    suites:
+        homepage:
+            contexts:
+                - BehatTests\HomepageContext

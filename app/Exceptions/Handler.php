@@ -12,6 +12,8 @@ class Handler extends ExceptionHandler
 {
     public function unauthenticated($request, AuthenticationException $exception)
     {
-        return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNAUTHORIZED);
+        return response()->json([
+            "message" => $exception->getMessage(),
+        ], Response::HTTP_UNAUTHORIZED);
     }
 }
