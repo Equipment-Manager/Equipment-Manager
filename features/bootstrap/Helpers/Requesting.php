@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BehatTests\helpers;
+namespace BehatTests\Helpers;
 
 use Illuminate\Http\Request;
 use KrzysztofRewak\Larahat\Helpers\SimpleRequesting;
