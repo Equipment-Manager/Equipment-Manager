@@ -16,11 +16,17 @@ class User extends LaravelUser
         "email",
         "password",
     ];
+    protected $quarded = [
+        "is_verified",
+        "is_active",
+    ];
     protected $hidden = [
         "password",
         "remember_token",
     ];
     protected $casts = [
         "email_verified_at" => "datetime",
+        "is_verified" => "boolean",
+        "is_active" => "boolean",
     ];
 }
