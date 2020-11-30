@@ -18,6 +18,7 @@ abstract class ApiRequest extends FormRequest
     public function __construct(ApiResponse $apiResponse)
     {
         parent::__construct();
+
         $this->apiResponse = $apiResponse;
     }
 
@@ -30,5 +31,4 @@ abstract class ApiRequest extends FormRequest
                 ->getResponse()
         );
     }
-
 }

@@ -7,7 +7,6 @@ namespace App\Services;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Contracts\Hashing\Hasher;
-use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
@@ -22,10 +21,8 @@ class AuthService
     {
         $user = User::query()->where("email", $loginRequest->email)->first();
         if (!$user || $this->hasher->check($loginRequest->password, $user->password)) {
-
         }
 
-        return $user->createToken('auth')->plainTextToken;
-
+        return $user->createToken("auth")->plainTextToken;
     }
 }
