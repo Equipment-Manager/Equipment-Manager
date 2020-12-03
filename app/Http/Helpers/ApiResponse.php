@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ApiResponse
 {
-    private bool $success;
-    private int $statusCode;
-    private string $message;
-    private array $data;
+    private bool $success = true;
+    private int $statusCode = 200;
+    private string $message = "";
+    private array $data = [];
 
     public function getResponse(): JsonResponse
     {
