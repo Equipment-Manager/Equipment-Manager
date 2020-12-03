@@ -17,11 +17,7 @@ class AuthController extends Controller
     public function __construct(ApiResponse $apiResponse, AuthService $authService)
     {
         parent::__construct($apiResponse);
-
         $this->authService = $authService;
-        $this->middleware("auth:api", [
-            "except" => ["login"],
-        ]);
     }
 
     public function login(LoginRequest $loginRequest): JsonResponse
