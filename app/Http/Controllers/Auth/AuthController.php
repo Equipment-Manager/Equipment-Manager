@@ -26,11 +26,12 @@ class AuthController extends Controller
 
     public function login(LoginRequest $loginRequest): JsonResponse
     {
+        $data = $loginRequest->only("email", "password");
         return $this->apiResponse
             ->setSuccessStatus()
             ->setMessage("Login Successful")
             ->setData([
-                "token" => $this->authService->login($loginRequest),
+                "token" => $this->authService->login($data),
             ])
             ->getResponse();
     }
