@@ -21,6 +21,11 @@
         <pluginClass class="Psalm\LaravelPlugin\Plugin"/>
     </plugins>
     <issueHandlers>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="app/Http/Requests"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
         <ParamNameMismatch>
             <errorLevel type="suppress">
                 <file name="app/Models/User.php"/>
