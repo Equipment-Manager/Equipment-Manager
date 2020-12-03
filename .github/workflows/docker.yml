@@ -43,27 +43,3 @@ jobs:
 
       - name: Run code style checker
         run: docker-compose run php ./vendor/bin/ecs check
-
-      - name: Discord notification (succeeded)
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        if: succeess()
-        with:
-          args: "The Github Action of {{ EVENT_PAYLOAD.repository.full_name }} has been Succeeded!"
-
-      - name: Discord notification (failed)
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        if: failure()
-        with:
-          args: "The Github Action of {{ EVENT_PAYLOAD.repository.full_name }} has been Failed!"
-
-      - name: Discord notification (cancelled)
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        if: cancelled()
-        with:
-          args: "The Github Actions of {{ EVENT_PAYLOAD.repository.full_name }} has been Cancelled!"
