@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
-    /** @var User $model */
     protected $model = User::class;
 
     public function definition(): array
