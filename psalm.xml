@@ -24,6 +24,7 @@
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="app/Http/Requests"/>
+                <directory name="app/Mail/"/>
             </errorLevel>
         </PropertyNotSetInConstructor>
         <ParamNameMismatch>
