@@ -16,7 +16,7 @@ class CreateInvitesTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('invites');
     }
