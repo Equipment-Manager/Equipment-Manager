@@ -21,6 +21,10 @@ class InviteService
 
     public function invite(array $data): void
     {
+        if($user = User::where("email", $data["email"])->first()){
+            //exception
+        }
+
         do {
             $token = Str::random();
         } while (Invite::query()->where("token", $token)->first());
@@ -35,8 +39,8 @@ class InviteService
 
     public function accept(string $token, array $data): User
     {
-        if(!$invite = Invite::where("token", $token)->first()) {
-
+        if(!$invite = $this->getInviteByToken($token)) {
+            //exception
         }
 
         $user = User::create([
@@ -45,8 +49,25 @@ class InviteService
             "password" => $this->hasher->make($data["password"]),
         ]);
 
-        $invite->delete();
+        $invite->status = "accepted";
+        $invite->save();
+
         return $user;
+    }
+
+    public function cancel(string $token): void
+    {
+        if(!$invite = $this->getInviteByToken($token)) {
+            //exception
+        }
+
+        $invite->status = "canceled";
+        $invite->save();
+    }
+
+    private function getInviteByToken($token): Invite
+    {
+        return Invite::where("token", $token)->pending()->first();
     }
 
 }

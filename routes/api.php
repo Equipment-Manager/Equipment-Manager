@@ -11,5 +11,6 @@ $router = app(Router::class);
 
 $router->post("/auth/login", [AuthController::class, "login"]);
 
-$router->post("/invite", [InviteController::class, "invite"]);
+$router->post("/invite", [InviteController::class, "invite"])->middleware("auth:sanctum");
 $router->post("/invite/accept/{token}", [InviteController::class, "accept"]);
+$router->post("/invite/cancel/{token}", [InviteController::class, "cancel"])->middleware("auth:sanctum");

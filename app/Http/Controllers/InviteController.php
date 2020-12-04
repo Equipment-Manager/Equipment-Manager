@@ -6,6 +6,7 @@ use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\InviteRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Services\InviteService;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class InviteController extends Controller
@@ -35,12 +36,22 @@ class InviteController extends Controller
         $user = $this->inviteService->accept($token, $data);
 
         return $this->apiResponse
-            ->setSuccessStatus(201)
+            ->setSuccessStatus(Response::HTTP_CREATED)
             ->setData([
                 "user" => $user,
             ])
             ->setMessage("User Created.")
             ->getResponse();
 
+    }
+
+    public function cancel(string $token): JsonResponse
+    {
+        $this->inviteService->cancel($token);
+
+        return $this->apiResponse
+            ->setSuccessStatus(Response::HTTP_OK)
+            ->setMessage("Invite canceled")
+            ->getResponse();
     }
 }
