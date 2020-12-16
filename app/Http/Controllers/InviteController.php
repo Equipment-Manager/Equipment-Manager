@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\ApiResponse;
@@ -9,13 +11,14 @@ use App\Services\InviteService;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class InviteController extends Controller
+class InviteController extends ApiController
 {
     protected InviteService $inviteService;
 
     public function __construct(ApiResponse $apiResponse, InviteService $inviteService)
     {
         parent::__construct($apiResponse);
+
         $this->inviteService = $inviteService;
     }
 
@@ -26,7 +29,7 @@ class InviteController extends Controller
 
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage("Invitation email sent")
+            ->setMessage(__("invite.send"))
             ->getResponse();
     }
 
@@ -40,9 +43,8 @@ class InviteController extends Controller
             ->setData([
                 "user" => $user,
             ])
-            ->setMessage("User Created.")
+            ->setMessage(__("invite.accepted"))
             ->getResponse();
-
     }
 
     public function cancel(string $token): JsonResponse
@@ -51,7 +53,7 @@ class InviteController extends Controller
 
         return $this->apiResponse
             ->setSuccessStatus(Response::HTTP_OK)
-            ->setMessage("Invite canceled")
+            ->setMessage(__("invite.canceled"))
             ->getResponse();
     }
 }

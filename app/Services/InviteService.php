@@ -8,12 +8,14 @@ use App\Mail\InviteCreated;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class InviteService
 {
     protected Hasher $hasher;
+
     public function __construct(Hasher $hasher)
     {
         $this->hasher = $hasher;
@@ -21,17 +23,9 @@ class InviteService
 
     public function invite(array $data): void
     {
-        if($user = User::where("email", $data["email"])->first()){
-            //exception
-        }
-
-        do {
-            $token = Str::random();
-        } while (Invite::query()->where("token", $token)->first());
-
         $invite = Invite::create([
             "email" => $data["email"],
-            "token" => $token,
+            "token" => Str::uuid(),
         ]);
 
         Mail::to($data["email"])->send(new InviteCreated($invite));
@@ -39,9 +33,7 @@ class InviteService
 
     public function accept(string $token, array $data): User
     {
-        if(!$invite = $this->getInviteByToken($token)) {
-            //exception
-        }
+        $invite = $this->getInviteByToken($token);
 
         $user = User::create([
             "email" => $invite->email,
@@ -49,7 +41,7 @@ class InviteService
             "password" => $this->hasher->make($data["password"]),
         ]);
 
-        $invite->status = "accepted";
+        $invite->status = Invite::STATUS_ACCEPTED;
         $invite->save();
 
         return $user;
@@ -57,17 +49,20 @@ class InviteService
 
     public function cancel(string $token): void
     {
-        if(!$invite = $this->getInviteByToken($token)) {
-            //exception
-        }
+        $invite = $this->getInviteByToken($token);
 
-        $invite->status = "canceled";
+        $invite->status = Invite::STATUS_CANCELED;
         $invite->save();
     }
 
-    private function getInviteByToken($token): Invite
+    /**
+     * @throws ModelNotFoundException
+     */
+    private function getInviteByToken(string $token): Invite
     {
-        return Invite::where("token", $token)->pending()->first();
+        return Invite::query()
+            ->where("token", $token)
+            ->pending()
+            ->firstOrFail();
     }
-
 }

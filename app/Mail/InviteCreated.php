@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use App\Models\Invite;
@@ -9,9 +11,12 @@ use Illuminate\Queue\SerializesModels;
 
 class InviteCreated extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-    /** @var Invite $invite */
+    /**
+     * @var Invite
+     */
     public $invite;
 
     public function __construct(Invite $invite)
@@ -21,6 +26,6 @@ class InviteCreated extends Mailable
 
     public function build(): self
     {
-        return $this->markdown('emails.invite')->subject("Invitation to " . config("app.name"));
+        return $this->markdown("emails.invite")->subject("Invitation to " . config("app.name"));
     }
 }
