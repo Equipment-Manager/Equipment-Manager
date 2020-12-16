@@ -14,7 +14,7 @@ services:
     restart: always
 
   php:
-    image: ghcr.io/equipment-manager/equipmentmanager-php:0.2.0-pre
+    image: ghcr.io/equipment-manager/equipmentmanager-php:0.2.1
     container_name: ${APP_NAME}-api
     working_dir: /application
     volumes:
