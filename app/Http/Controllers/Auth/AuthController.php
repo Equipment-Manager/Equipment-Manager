@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\LoginRequest;
 use App\Services\AuthService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
     protected AuthService $authService;
 
