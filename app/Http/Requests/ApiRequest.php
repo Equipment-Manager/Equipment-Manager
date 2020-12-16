@@ -21,13 +21,4 @@ abstract class ApiRequest extends FormRequest
         $this->apiResponse = $apiResponse;
     }
 
-    public function failedValidation(Validator $validator): void
-    {
-        throw new HttpResponseException(
-            $this->apiResponse
-                ->setData([$validator->errors()])
-                ->setFailureStatus(Response::HTTP_BAD_REQUEST)
-                ->getResponse()
-        );
-    }
 }

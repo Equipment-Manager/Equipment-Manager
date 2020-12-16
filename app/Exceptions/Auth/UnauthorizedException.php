@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Exceptions\Auth;
 
+use App\Exceptions\ApiException;
 use Illuminate\Http\Response;
 
-class UnauthorizedException
+class UnauthorizedException extends ApiException
 {
     /** @var int $code */
     protected $code = Response::HTTP_UNAUTHORIZED;
