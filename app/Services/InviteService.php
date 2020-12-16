@@ -26,6 +26,7 @@ class InviteService
         $invite = Invite::create([
             "email" => $data["email"],
             "token" => Str::uuid(),
+            "status" => Invite::STATUS_PENDING,
         ]);
 
         Mail::to($data["email"])->send(new InviteCreated($invite));
