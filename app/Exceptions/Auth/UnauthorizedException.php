@@ -9,6 +9,5 @@ use Illuminate\Http\Response;
 
 class UnauthorizedException extends ApiException
 {
-    /** @var int $code */
     protected $code = Response::HTTP_UNAUTHORIZED;
 }
