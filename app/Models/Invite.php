@@ -19,6 +19,6 @@ class Invite extends Model
 
     public function scopePending(Builder $query): Builder
     {
-        return $query->where("status", "pending");
+        return $query->where("status", self::STATUS_PENDING);
     }
 }

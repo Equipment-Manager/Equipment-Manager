@@ -9,16 +9,18 @@ use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailer;
 use Illuminate\Support\Str;
 
 class InviteService
 {
     protected Hasher $hasher;
+    protected Mailer $mailer;
 
-    public function __construct(Hasher $hasher)
+    public function __construct(Hasher $hasher, Mailer $mailer)
     {
         $this->hasher = $hasher;
+        $this->mailer = $mailer;
     }
 
     public function invite(array $data): void
@@ -29,7 +31,7 @@ class InviteService
             "status" => Invite::STATUS_PENDING,
         ]);
 
-        Mail::to($data["email"])->send(new InviteCreated($invite));
+        $this->mailer->to($data["email"])->send(new InviteCreated($invite));
     }
 
     public function accept(string $token, array $data): User

@@ -14,10 +14,7 @@ class InviteCreated extends Mailable
     use Queueable;
     use SerializesModels;
 
-    /**
-     * @var Invite
-     */
-    public $invite;
+    public Invite $invite;
 
     public function __construct(Invite $invite)
     {

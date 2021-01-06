@@ -26,7 +26,7 @@ class AuthController extends ApiController
         $data = $loginRequest->only("email", "password");
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage("Login Successful")
+            ->setMessage(__("auth.login.success"))
             ->setData([
                 "token" => $this->authService->login($data),
             ])

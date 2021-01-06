@@ -40,9 +40,9 @@ class ExceptionMapper
     public function mapMessage(Throwable $exception): string
     {
         $mapping = [
-            AuthenticationException::class => "Unauthorized",
-            ModelNotFoundException::class => "Model not found",
-            RouteNotFoundException::class => "Route not found",
+            AuthenticationException::class => __("auth.auth.unauthorized"),
+            ModelNotFoundException::class => __("exceptions.model.not_found"),
+            RouteNotFoundException::class => __("exceptions.model.not_found"),
         ];
 
         foreach ($mapping as $class => $message) {
@@ -55,7 +55,7 @@ class ExceptionMapper
             return $exception->getMessage();
         }
 
-        return "Internal server error";
+        return __("exceptions.errors.internal_server_error");
     }
 
     public function mapData(Throwable $exception): array
