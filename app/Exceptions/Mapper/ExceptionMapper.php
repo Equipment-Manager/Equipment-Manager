@@ -66,5 +66,4 @@ class ExceptionMapper
 
         return [];
     }
-
 }
