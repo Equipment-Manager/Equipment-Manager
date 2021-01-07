@@ -1,5 +1,5 @@
 ## Equipment Manager
-Create `.env` file based on '.env.example':
+Create `.env` file based on `.env.example`:
 ```shell script
 cp .env.example .env
 ```
