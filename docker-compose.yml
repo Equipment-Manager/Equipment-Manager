@@ -32,7 +32,7 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     ports:
-      - ${DB_SECOND_PORT}:3306
+      - ${DB_PORT}:3306
     networks:
       - equipment-manager
     restart: always
