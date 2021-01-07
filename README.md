@@ -4,22 +4,22 @@ Create `.env` file based on '.env.example':
 cp .env.example .env
 ```
 
-###Run containers:
+### Run containers:
 ```shell script
 docker-compose up -d --build
 ```
 
-###Install Dependencies:
+### Install Dependencies:
 ```shell script
 docker-compose exec php composer install 
 ```
 
-###Generate application key:
+### Generate application key:
 ```shell script 
 docker-compose exec php php artisan key:generate
 ```
 
-###Run migrations:
+### Run migrations:
 ```shell script
 docker-compose exec php php artisan migrate
 ```
@@ -28,8 +28,8 @@ with seeders:
 docker-compose exec php php artisan migrate --seed
 ```
 
-###Development commands
-####PHP
+### Development commands
+#### PHP
 Replace `*` with command
 ```shell script
 docker-compose exec php php *
@@ -39,7 +39,7 @@ e.g:
 docker-compose exec php php artisan migrate
 ```
 
-####Composer
+#### Composer
 Replace `*` with command
 ```shell script
 docker-compose exec php composer *
@@ -50,7 +50,7 @@ docker-compose exec php composer install
 docker-compose exec php composer require
 ```
 
-###ECS
+### ECS
 Run ecs with following command:
 ```shell script
 docker-compose exec php ./vendor/bin/ecs check
@@ -60,13 +60,13 @@ Add flag `--fix`, to apply all the fixers, like so:
 docker-compose exec php ./vendor/bin/ecs check --fix
 ```
 
-###Tests
+### Tests
 Run Behat:
 ```shell script
 docker-compose exec php ./vendor/bin/behat
 ```
 
-###Psalm
+### Psalm
 Run Psalm:
 ```shell script
 docker-compose exec php ./vendor/bin/psalm
