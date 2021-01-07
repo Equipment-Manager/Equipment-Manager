@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\User;
+use App\Models\User;
+use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -14,12 +15,13 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
+        /** @var Hasher $hasher */
+        $hasher = app(Hasher::class);
         return [
             "name" => $this->faker->name,
             "email" => $this->faker->unique()->safeEmail,
             "email_verified_at" => now(),
-            // password
-            "password" => "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+            "password" => $hasher->make("password"),
             "remember_token" => Str::random(10),
         ];
     }
