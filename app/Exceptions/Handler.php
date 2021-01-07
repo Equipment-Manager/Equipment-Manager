@@ -4,16 +4,31 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Illuminate\Auth\AuthenticationException;
+use App\Exceptions\Mapper\ExceptionMapper;
+use App\Http\Helpers\ApiResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    public function unauthenticated($request, AuthenticationException $exception)
+    public function render($request, Throwable $e)
     {
-        return response()->json([
-            "message" => $exception->getMessage(),
-        ], Response::HTTP_UNAUTHORIZED);
+        /** @var ExceptionMapper $mapper */
+        $mapper = $this->container->make(ExceptionMapper::class);
+
+        return $this->renderJsonResponse($mapper->mapMessage($e), $mapper->mapCode($e), $mapper->mapData($e));
+    }
+
+    protected function renderJsonResponse(string $message, int $code, array $data = []): JsonResponse
+    {
+        /** @var ApiResponse $apiResponse */
+        $apiResponse = $this->container->make(ApiResponse::class);
+
+        return $apiResponse
+            ->setMessage($message)
+            ->setData($data)
+            ->setFailureStatus($code)
+            ->getResponse();
     }
 }
