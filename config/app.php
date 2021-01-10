@@ -59,6 +59,7 @@ use Illuminate\Support\Str;
 use Illuminate\Translation\TranslationServiceProvider;
 use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -98,6 +99,7 @@ return [
         ValidationServiceProvider::class,
         ViewServiceProvider::class,
         RouteServiceProvider::class,
+        PermissionServiceProvider::class,
     ],
     "aliases" => [
         "App" => App::class,
