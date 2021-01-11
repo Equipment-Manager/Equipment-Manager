@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Providers\AuthServiceProvider as ApplicationAuthServiceProvider;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\AuthServiceProvider;
+use Illuminate\Auth\AuthServiceProvider as LaravelAuthServiceProvider;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
 use Illuminate\Bus\BusServiceProvider;
@@ -76,7 +77,7 @@ return [
     "key" => env("APP_KEY"),
     "cipher" => "AES-256-CBC",
     "providers" => [
-        AuthServiceProvider::class,
+        LaravelAuthServiceProvider::class,
         BroadcastServiceProvider::class,
         BusServiceProvider::class,
         CacheServiceProvider::class,
@@ -100,6 +101,7 @@ return [
         ViewServiceProvider::class,
         RouteServiceProvider::class,
         PermissionServiceProvider::class,
+        ApplicationAuthServiceProvider::class,
     ],
     "aliases" => [
         "App" => App::class,
