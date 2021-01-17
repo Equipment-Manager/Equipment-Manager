@@ -14,7 +14,7 @@ services:
     restart: always
 
   php:
-    image: ghcr.io/equipment-manager/equipmentmanager-php:0.0.1
+    image: ghcr.io/equipment-manager/equipmentmanager-php:0.2.1
     container_name: ${APP_NAME}-api
     working_dir: /application
     volumes:
@@ -26,20 +26,6 @@ services:
   database:
     image: mysql:5.7
     container_name: ${APP_NAME}-database
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USERNAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-    ports:
-      - ${DB_PORT}:3306
-    networks:
-      - equipment-manager
-    restart: always
-
-  database-testing:
-    image: mysql:5.7
-    container_name: ${APP_NAME}-database-testing
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
