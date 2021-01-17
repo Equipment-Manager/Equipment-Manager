@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Throwable;
 
@@ -20,6 +21,7 @@ class ExceptionMapper
             AuthenticationException::class => Response::HTTP_UNAUTHORIZED,
             ModelNotFoundException::class => Response::HTTP_NOT_FOUND,
             RouteNotFoundException::class => Response::HTTP_NOT_FOUND,
+            NotFoundHttpException::class => Response::HTTP_NOT_FOUND,
             ValidationException::class => Response::HTTP_UNPROCESSABLE_ENTITY,
             QueryException::class => Response::HTTP_UNPROCESSABLE_ENTITY,
         ];
@@ -43,6 +45,7 @@ class ExceptionMapper
             AuthenticationException::class => __("auth.auth.unauthorized"),
             ModelNotFoundException::class => __("exceptions.model.not_found"),
             RouteNotFoundException::class => __("exceptions.model.not_found"),
+            NotFoundHttpException::class => __("exceptions.model.not_found"),
         ];
 
         foreach ($mapping as $class => $message) {
