@@ -37,6 +37,20 @@ services:
       - equipment-manager
     restart: always
 
+  database-testing:
+    image: mysql:5.7
+    container_name: ${APP_NAME}-database-testing
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    ports:
+      - ${DB_SECOND_PORT}:3306
+    networks:
+      - equipment-manager
+    restart: always
+
 networks:
   equipment-manager:
     driver: bridge
