@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Providers\RouteServiceProvider;
+use App\Providers\TelescopeServiceProvider;
 use Illuminate\Auth\AuthServiceProvider;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
@@ -98,6 +99,7 @@ return [
         ValidationServiceProvider::class,
         ViewServiceProvider::class,
         RouteServiceProvider::class,
+        TelescopeServiceProvider::class,
     ],
     "aliases" => [
         "App" => App::class,
