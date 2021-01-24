@@ -12,4 +12,7 @@ return [
     "errors" => [
         "internal_server_error" => "Internal server error",
     ],
+    "auth" => [
+        "forbidden" => "You are not allowed to do this action.",
+    ],
 ];

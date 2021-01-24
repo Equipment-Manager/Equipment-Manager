@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BehatTests\Helpers;
+namespace App\Tests\Traits;
 
 use Illuminate\Http\Request;
 use KrzysztofRewak\Larahat\Helpers\SimpleRequesting;
@@ -37,5 +37,13 @@ trait Requesting
     public function aResponseStatusCodeShouldBe(int $code): void
     {
         Assert::assertEquals($code, $this->response->getStatusCode());
+    }
+
+    /**
+     * @Given a request body contains :key equal :value
+     */
+    public function aRequestBodyContainsEqual(string $key, string $value): void
+    {
+        $this->request[$key] = $value;
     }
 }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Auth\PermissionDeniedException;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\InviteRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Services\InviteService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -22,8 +24,14 @@ class InviteController extends ApiController
         $this->inviteService = $inviteService;
     }
 
+    /**
+     * @throws PermissionDeniedException
+     */
     public function invite(InviteRequest $request): JsonResponse
     {
+        if (!$request->user()->can("Manage invites")) {
+            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+        }
         $data = $request->only("email");
         $this->inviteService->invite($data);
 
@@ -47,8 +55,14 @@ class InviteController extends ApiController
             ->getResponse();
     }
 
-    public function cancel(string $token): JsonResponse
+    /**
+     * @throws PermissionDeniedException
+     */
+    public function cancel(Request $request, string $token): JsonResponse
     {
+        if (!$request->user()->can("Manage permissions")) {
+            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+        }
         $this->inviteService->cancel($token);
 
         return $this->apiResponse

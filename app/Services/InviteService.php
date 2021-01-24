@@ -8,8 +8,8 @@ use App\Mail\InviteCreated;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Mail\Mailer;
 use Illuminate\Support\Str;
 
 class InviteService
