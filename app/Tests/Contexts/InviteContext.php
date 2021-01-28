@@ -29,7 +29,7 @@ class InviteContext implements Context
     /**
      * @Then an invite with :email should be created
      */
-    public function anInviteWithShouldBeCreated($email): void
+    public function anInviteWithShouldBeCreated(string $email): void
     {
         $this->invite = Invite::query()->where("email", $email)->firstOrFail();
     }
@@ -37,7 +37,7 @@ class InviteContext implements Context
     /**
      * @Then an invite status should be :status
      */
-    public function anInviteStatusShouldBe($status): void
+    public function anInviteStatusShouldBe(string $status): void
     {
         Assert::assertEquals($status, $this->invite->status);
     }
@@ -45,7 +45,7 @@ class InviteContext implements Context
     /**
      * @Then an invite with token :token should be :status
      */
-    public function anInviteWithUuidShouldBe($token, $status): void
+    public function anInviteWithUuidShouldBe(string $token, int $status): void
     {
         $invite = Invite::query()->where("token", $token)->first();
 

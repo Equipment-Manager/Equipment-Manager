@@ -42,7 +42,7 @@ trait RegisteringPermissions
     /**
      * @Given a role :roleName can :ability
      */
-    public function aRoleCan(string $roleName, $ability): void
+    public function aRoleCan(string $roleName, string $ability): void
     {
         $role = Role::query()
             ->where("name", $roleName)
