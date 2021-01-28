@@ -45,7 +45,7 @@ class InviteContext implements Context
     /**
      * @Then an invite with token :token should be :status
      */
-    public function anInviteWithUuidShouldBe(string $token, int $status): void
+    public function anInviteWithUuidShouldBe(string $token, string $status): void
     {
         $invite = Invite::query()->where("token", $token)->first();
 
