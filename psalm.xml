@@ -25,6 +25,8 @@
             <errorLevel type="suppress">
                 <directory name="app/Http/Requests"/>
                 <directory name="app/Mail/"/>
+                <file name="app/Models/Permission.php"/>
+                <file name="app/Models/Role.php" />
             </errorLevel>
         </PropertyNotSetInConstructor>
         <ParamNameMismatch>
