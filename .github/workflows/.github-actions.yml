@@ -2,7 +2,7 @@ name: Build & Test the application
 
 on:
   push:
-    branches: [develop]
+    branches: ["128-test-model-github-actions"]
   pull_request:
     branches: [develop]
 
@@ -21,9 +21,6 @@ jobs:
         env:
           TEST_KEY: ${{ secrets.TEST_KEY }}
 
-      - name: Run the Docker containers
-        run: docker-compose -f docker-compose.yml up -d
-
       - name: Cache composer dependencies
         uses: actions/cache@v2
         with:
@@ -32,8 +29,30 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      - name: Install dependencies
-        run: docker-compose run -w /application php composer install --prefer-dist --no-progress --no-suggest
+      - name: Install composer dependencies
+        run: docker-compose -f docker-compose.yml run -w /application php composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Upload artficats build
+        uses: actions/upload-artifact@master
+        with:
+          name: equipment-manager-build
+          path: .
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download artficats
+        uses: actions/download-artifact@master
+        with:
+          name: equipment-manager-build
+          path: .
+
+      - name: Run docker containers
+        run: docker-compose -f docker-compose.yml run -w /application php composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run Behat tests
         run: docker-compose run php ./vendor/bin/behat --format=progress
