@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Providers\AuthServiceProvider as ApplicationAuthServiceProvider;
 use App\Providers\RouteServiceProvider;
 use App\Providers\TelescopeServiceProvider;
-use Illuminate\Auth\AuthServiceProvider;
+use Illuminate\Auth\AuthServiceProvider as LaravelAuthServiceProvider;
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
 use Illuminate\Bus\BusServiceProvider;
@@ -60,6 +61,7 @@ use Illuminate\Support\Str;
 use Illuminate\Translation\TranslationServiceProvider;
 use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -76,7 +78,7 @@ return [
     "key" => env("APP_KEY"),
     "cipher" => "AES-256-CBC",
     "providers" => [
-        AuthServiceProvider::class,
+        LaravelAuthServiceProvider::class,
         BroadcastServiceProvider::class,
         BusServiceProvider::class,
         CacheServiceProvider::class,
@@ -99,6 +101,8 @@ return [
         ValidationServiceProvider::class,
         ViewServiceProvider::class,
         RouteServiceProvider::class,
+        PermissionServiceProvider::class,
+        ApplicationAuthServiceProvider::class,
         TelescopeServiceProvider::class,
     ],
     "aliases" => [

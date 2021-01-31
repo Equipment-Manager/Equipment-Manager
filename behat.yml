@@ -4,6 +4,13 @@ default:
             env: ".env.behat"
 
     suites:
+        invites:
+            contexts:
+                - App\Tests\Contexts\InviteContext
+            paths:
+                - features/invites
         homepage:
             contexts:
-                - BehatTests\HomepageContext
+                - App\Tests\Contexts\HomepageContext
+            paths:
+                - features/homepage

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BehatTests;
+namespace App\Tests\Contexts;
 
+use App\Tests\Traits\Requesting;
 use Behat\Behat\Context\Context;
-use BehatTests\Helpers\Requesting;
 
 class HomepageContext implements Context
 {
