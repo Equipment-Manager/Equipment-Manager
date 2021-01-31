@@ -17,7 +17,7 @@ class InviteFactory extends Factory
         return [
             "email" => $this->faker->unique()->safeEmail,
             "token" => Str::uuid(),
-            "status" => "pending",
+            "status" => Invite::STATUS_PENDING,
         ];
     }
 }
