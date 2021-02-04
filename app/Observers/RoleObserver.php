@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 
 class RoleObserver
 {
