@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Models\Role;
 
 class RolesService
 {
@@ -28,6 +28,7 @@ class RolesService
 
     public function add(array $data): void
     {
+        dump($data);
         Role::create([
             "name" => $data["name"],
             "guard_name" => "web",
