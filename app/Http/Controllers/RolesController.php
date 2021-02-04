@@ -9,6 +9,7 @@ use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\Roles\AddRoleRequest;
 use App\Http\Requests\Roles\EditRoleRequest;
 use App\Services\RolesService;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,11 +17,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class RolesController extends ApiController
 {
     protected RolesService $rolesService;
+    protected Translator $translator;
 
-    public function __construct(ApiResponse $apiResponse, RolesService $rolesService)
+    public function __construct(ApiResponse $apiResponse, RolesService $rolesService, Translator $translator)
     {
         parent::__construct($apiResponse);
         $this->rolesService = $rolesService;
+        $this->translator = $translator;
     }
 
     /**
@@ -29,14 +32,14 @@ class RolesController extends ApiController
     public function index(Request $request): JsonResponse
     {
         if (!$request->user()->can("Manage permissions")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
 
         $roles = $this->rolesService->index();
 
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage(__("roles.role.index"))
+            ->setMessage($this->translator->get("roles.role.index"))
             ->setData([
                 "roles" => $roles,
             ])
@@ -49,14 +52,14 @@ class RolesController extends ApiController
     public function show(int $id, Request $request): JsonResponse
     {
         if (!$request->user()->can("Manage permissions")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
 
         $role = $this->rolesService->show($id);
 
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage(__("roles.role.show"))
+            ->setMessage($this->translator->get("roles.role.show"))
             ->setData([
                 "role" => $role,
             ])
@@ -69,7 +72,7 @@ class RolesController extends ApiController
     public function add(AddRoleRequest $request): JsonResponse
     {
         if (!$request->user()->can("Manage permissions")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
 
         $data = $request->only("name");
@@ -77,7 +80,7 @@ class RolesController extends ApiController
 
         return $this->apiResponse
             ->setSuccessStatus(Response::HTTP_CREATED)
-            ->setMessage(__("roles.role.created"))
+            ->setMessage($this->translator->get("roles.role.created"))
             ->getResponse();
     }
 
@@ -87,7 +90,7 @@ class RolesController extends ApiController
     public function edit(int $id, EditRoleRequest $request): JsonResponse
     {
         if (!$request->user()->can("Manage permissions")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
 
         $data = $request->only("name");
@@ -95,7 +98,7 @@ class RolesController extends ApiController
 
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage(__("roles.role.changed"))
+            ->setMessage($this->translator->get("roles.role.changed"))
             ->getResponse();
     }
 
@@ -105,7 +108,7 @@ class RolesController extends ApiController
     public function syncPermissions(int $id, Request $request): JsonResponse
     {
         if (!$request->user()->can("Manage permissions")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
 
         $data = $request->only("permissions");
@@ -113,7 +116,7 @@ class RolesController extends ApiController
 
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage(__("roles.role.permissions.synced"))
+            ->setMessage($this->translator->get("roles.role.permissions.synced"))
             ->getResponse();
     }
 
@@ -123,13 +126,13 @@ class RolesController extends ApiController
     public function delete(int $id, Request $request): JsonResponse
     {
         if (!$request->user()->can("Manage permissions")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
 
         $this->rolesService->delete($id);
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage(__("roles.role.deleted"))
+            ->setMessage($this->translator->get("roles.role.deleted"))
             ->getResponse();
     }
 }

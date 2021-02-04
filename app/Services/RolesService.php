@@ -18,7 +18,7 @@ class RolesService
             ->get();
     }
 
-    public function show(int $id): Builder|Model
+    public function show(int $id): Builder | Model
     {
         return Role::query()
             ->with("permissions")

@@ -7,14 +7,17 @@ namespace App\Services;
 use App\Exceptions\Auth\UnauthorizedException;
 use App\Models\User;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Translation\Translator;
 
 class AuthService
 {
     protected Hasher $hasher;
+    protected Translator $translator;
 
-    public function __construct(Hasher $hasher)
+    public function __construct(Hasher $hasher, Translator $translator)
     {
         $this->hasher = $hasher;
+        $this->translator = $translator;
     }
 
     /**
@@ -24,7 +27,7 @@ class AuthService
     {
         $user = User::query()->where("email", $data["email"])->first();
         if (!$user || !$this->hasher->check($data["password"], $user->password)) {
-            throw new UnauthorizedException(__("auth.failed"));
+            throw new UnauthorizedException($this->translator->get("auth.failed"));
         }
 
         return $user->createToken($data["email"])->plainTextToken;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exceptions\Mapper;
 
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
@@ -15,6 +16,12 @@ use Throwable;
 
 class ExceptionMapper
 {
+    protected Translator $translator;
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function mapCode(Throwable $exception): int
     {
         $mapping = [
@@ -42,10 +49,10 @@ class ExceptionMapper
     public function mapMessage(Throwable $exception): string
     {
         $mapping = [
-            AuthenticationException::class => __("auth.auth.unauthorized"),
-            ModelNotFoundException::class => __("exceptions.model.not_found"),
-            RouteNotFoundException::class => __("exceptions.model.not_found"),
-            NotFoundHttpException::class => __("exceptions.model.not_found"),
+            AuthenticationException::class => $this->translator->get("auth.auth.unauthorized"),
+            ModelNotFoundException::class => $this->translator->get("exceptions.model.not_found"),
+            RouteNotFoundException::class => $this->translator->get("exceptions.model.not_found"),
+            NotFoundHttpException::class => $this->translator->get("exceptions.model.not_found"),
         ];
 
         foreach ($mapping as $class => $message) {
@@ -58,7 +65,7 @@ class ExceptionMapper
             return $exception->getMessage();
         }
 
-        return __("exceptions.errors.internal_server_error");
+        return $this->translator->get("exceptions.errors.internal_server_error");
     }
 
     public function mapData(Throwable $exception): array
