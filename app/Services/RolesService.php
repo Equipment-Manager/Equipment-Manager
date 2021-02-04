@@ -28,7 +28,6 @@ class RolesService
 
     public function add(array $data): void
     {
-        dump($data);
         Role::create([
             "name" => $data["name"],
             "guard_name" => "web",
