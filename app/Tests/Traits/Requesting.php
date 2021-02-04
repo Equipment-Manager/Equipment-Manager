@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Traits;
 
+use Behat\Gherkin\Node\TableNode;
 use Illuminate\Http\Request;
 use KrzysztofRewak\Larahat\Helpers\SimpleRequesting;
 use PHPUnit\Framework\Assert;
@@ -45,5 +46,17 @@ trait Requesting
     public function aRequestBodyContainsEqual(string $key, string $value): void
     {
         $this->request[$key] = $value;
+    }
+
+    /**
+     * @Given a request body contains :key with array:
+     */
+    public function aRequestBodyContainsWithArray(string $key, TableNode $table): void
+    {
+        $array = [];
+        foreach ($table->getHash() as $row) {
+            $array[] = $row;
+        }
+        $this->request[$key] = $array;
     }
 }

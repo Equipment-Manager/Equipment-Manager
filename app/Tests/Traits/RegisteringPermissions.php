@@ -12,14 +12,6 @@ use Spatie\Permission\PermissionRegistrar;
 trait RegisteringPermissions
 {
     /**
-     * @beforeScenario
-     */
-    public function registerPermissions(): void
-    {
-        app(PermissionRegistrar::class)->registerPermissions();
-    }
-
-    /**
      * @Given the following permissions are created:
      */
     public function theFollowingPermissionsAreCreated(TableNode $table): void
