@@ -8,6 +8,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\LoginRequest;
 use App\Services\AuthService;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends ApiController
@@ -17,18 +18,32 @@ class AuthController extends ApiController
     public function __construct(ApiResponse $apiResponse, AuthService $authService)
     {
         parent::__construct($apiResponse);
-
         $this->authService = $authService;
     }
 
     public function login(LoginRequest $loginRequest): JsonResponse
     {
         $data = $loginRequest->only("email", "password");
+
         return $this->apiResponse
             ->setSuccessStatus()
             ->setMessage(__("auth.login.success"))
             ->setData([
                 "token" => $this->authService->login($data),
+            ])
+            ->getResponse();
+    }
+
+    public function authUser(Request $request): JsonResponse
+    {
+        $permissions = $this->authService->userPermissions($request->user());
+
+        return $this->apiResponse
+            ->setSuccessStatus()
+            ->setMessage(__("auth.login.success"))
+            ->setData([
+                "user" => $request->user(),
+                "permissions" => $permissions,
             ])
             ->getResponse();
     }
