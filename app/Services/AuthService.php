@@ -31,13 +31,8 @@ class AuthService
         return $user->createToken($data["email"])->plainTextToken;
     }
 
-    public function userPermissions(User $user): array
+    public function userPermissions(User $user): Collection
     {
-        $permissions = $user->getPermissionsViaRoles();
-        $userPermissions = [];
-        foreach ($permissions as $permission) {
-            $userPermissions[$permission["id"]] = $permission["name"];
-        }
-        return $userPermissions;
+        return $user->getPermissionsViaRoles()->unique("id");
     }
 }
