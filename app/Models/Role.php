@@ -11,6 +11,6 @@ class Role extends SpatieRoleModel
 {
     use HasFactory;
 
-    protected $table="roles";
+    protected $table = "roles";
     protected $fillable = ["name", "guard_name"];
 }
