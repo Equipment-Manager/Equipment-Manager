@@ -14,6 +14,7 @@ trait RebuildingApp
     public function rebuildApp(): void
     {
         $app = require __DIR__ . "../../../../bootstrap/app.php";
+        $app->loadEnvironmentFrom(".env.behat");
         $app->make(Kernel::class)->bootstrap();
     }
 }
