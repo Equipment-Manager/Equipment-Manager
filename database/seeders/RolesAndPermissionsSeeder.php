@@ -19,6 +19,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create([
             "name" => "Manage invites",
         ]);
+        Permission::create([
+            "name" => "Manage permissions",
+        ]);
 
         /** @var Role $role */
         $role = Role::create([
