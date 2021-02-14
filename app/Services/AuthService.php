@@ -8,6 +8,7 @@ use App\Exceptions\Auth\UnauthorizedException;
 use App\Models\User;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Support\Collection;
 
 class AuthService
 {
@@ -31,5 +32,10 @@ class AuthService
         }
 
         return $user->createToken($data["email"])->plainTextToken;
+    }
+
+    public function userPermissions(User $user): Collection
+    {
+        return $user->getPermissionsViaRoles()->unique("id");
     }
 }
