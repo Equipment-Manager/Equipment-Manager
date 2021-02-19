@@ -8,6 +8,7 @@ use App\Models\Invite;
 use App\Tests\Traits\Authorization;
 use App\Tests\Traits\FakingMailer;
 use App\Tests\Traits\PreparingUsers;
+use App\Tests\Traits\RebuildingApp;
 use App\Tests\Traits\RegisteringPermissions;
 use App\Tests\Traits\Requesting;
 use Behat\Behat\Context\Context;
@@ -17,9 +18,10 @@ use PHPUnit\Framework\Assert;
 
 class InviteContext implements Context
 {
+    use RebuildingApp;
+    use Authorization;
     use Requesting;
     use RefreshingDatabase;
-    use Authorization;
     use RegisteringPermissions;
     use PreparingUsers;
     use FakingMailer;

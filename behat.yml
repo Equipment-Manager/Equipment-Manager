@@ -14,3 +14,8 @@ default:
                 - App\Tests\Contexts\HomepageContext
             paths:
                 - features/homepage
+        roles:
+            contexts:
+                - App\Tests\Contexts\RoleContext
+            paths:
+                - features/roles

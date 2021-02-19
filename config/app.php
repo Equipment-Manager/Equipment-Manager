@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Providers\AuthServiceProvider as ApplicationAuthServiceProvider;
+use App\Providers\ObserverServiceProvider;
 use App\Providers\RouteServiceProvider;
 use App\Providers\TelescopeServiceProvider;
 use Illuminate\Auth\AuthServiceProvider as LaravelAuthServiceProvider;
@@ -104,6 +105,7 @@ return [
         PermissionServiceProvider::class,
         ApplicationAuthServiceProvider::class,
         TelescopeServiceProvider::class,
+        ObserverServiceProvider::class,
     ],
     "aliases" => [
         "App" => App::class,

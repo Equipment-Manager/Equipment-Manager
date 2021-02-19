@@ -9,6 +9,7 @@ use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\InviteRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Services\InviteService;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,12 +17,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class InviteController extends ApiController
 {
     protected InviteService $inviteService;
+    protected Translator $translator;
 
-    public function __construct(ApiResponse $apiResponse, InviteService $inviteService)
+    public function __construct(ApiResponse $apiResponse, InviteService $inviteService, Translator $translator)
     {
         parent::__construct($apiResponse);
-
         $this->inviteService = $inviteService;
+        $this->translator = $translator;
     }
 
     /**
@@ -30,14 +32,14 @@ class InviteController extends ApiController
     public function invite(InviteRequest $request): JsonResponse
     {
         if (!$request->user()->can("Manage invites")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
         $data = $request->only("email");
         $this->inviteService->invite($data);
 
         return $this->apiResponse
             ->setSuccessStatus()
-            ->setMessage(__("invite.send"))
+            ->setMessage($this->translator->get("invite.send"))
             ->getResponse();
     }
 
@@ -51,7 +53,7 @@ class InviteController extends ApiController
             ->setData([
                 "user" => $user,
             ])
-            ->setMessage(__("invite.accepted"))
+            ->setMessage($this->translator->get("invite.accepted"))
             ->getResponse();
     }
 
@@ -61,13 +63,13 @@ class InviteController extends ApiController
     public function cancel(Request $request, string $token): JsonResponse
     {
         if (!$request->user()->can("Manage permissions")) {
-            throw new PermissionDeniedException(__("exceptions.auth.forbidden"));
+            throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
         $this->inviteService->cancel($token);
 
         return $this->apiResponse
             ->setSuccessStatus(Response::HTTP_OK)
-            ->setMessage(__("invite.canceled"))
+            ->setMessage($this->translator->get("invite.canceled"))
             ->getResponse();
     }
 }

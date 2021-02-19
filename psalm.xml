@@ -34,5 +34,11 @@
                 <file name="app/Models/User.php"/>
             </errorLevel>
         </ParamNameMismatch>
+        <MissingConstructor>
+            <errorLevel type="suppress">
+                <directory name="app/Tests/Contexts"/>
+                <directory name="app/Tests/Traits"/>
+            </errorLevel>
+        </MissingConstructor>
     </issueHandlers>
 </psalm>

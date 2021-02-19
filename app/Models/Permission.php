@@ -10,4 +10,7 @@ use Spatie\Permission\Models\Permission as SpatiePermissionModel;
 class Permission extends SpatiePermissionModel
 {
     use HasFactory;
+
+    protected $table = "permissions";
+    protected $fillable = ["name", "guard_name"];
 }
