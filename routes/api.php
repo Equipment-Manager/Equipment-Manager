@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Routing\Router;
 
 /** @var Router $router */
@@ -24,5 +25,9 @@ $router->post("/roles/add", [RolesController::class, "add"])->middleware("auth:s
 $router->put("/roles/edit/{id}", [RolesController::class, "edit"])->middleware("auth:sanctum");
 $router->put("/roles/sync/{id}", [RolesController::class, "syncPermissions"])->middleware("auth:sanctum");
 $router->delete("/roles/delete/{id}", [RolesController::class, "delete"])->middleware("auth:sanctum");
+
+$router->get("/users", [UserController::class, "index"])->middleware("auth:sanctum");
+$router->get("/user/{user}", [UserController::class, "show"])->middleware("auth:sanctum");
+$router->post("/users/deactivate/{user}", [UserController::class, "deactivateUser"])->middleware("auth:sanctum");
 
 $router->get("/permissions", [PermissionsController::class, "index"])->middleware("auth:sanctum");

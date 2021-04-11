@@ -21,7 +21,7 @@ class UserFactory extends Factory
             "first_name" => $this->faker->firstName,
             "last_name" => $this->faker->lastName,
             "email" => $this->faker->unique()->safeEmail,
-            "avatar" => "/images/default-avatar.png",
+            "avatar" => "default-image.png",
             "email_verified_at" => now(),
             "password" => $hasher->make("password"),
             "remember_token" => Str::random(10),

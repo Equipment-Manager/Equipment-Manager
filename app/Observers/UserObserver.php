@@ -8,8 +8,8 @@ use App\Models\User;
 
 class UserObserver
 {
-    public function creating(User $user)
+    public function creating(User $user): void
     {
-        $user->avatar = asset('images/default-avatar.png');
+//        $user->avatar = asset("images/default-avatar.png");
     }
 }

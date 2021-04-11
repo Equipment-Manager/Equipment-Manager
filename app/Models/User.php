@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as LaravelUser;
 use Illuminate\Notifications\Notifiable;
@@ -19,6 +20,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $avatar
  * @property string $email
  * @property string $password
+ * @property bool $is_active
  * @property Carbon $email_verified_at
  * @property string $remember_token
  * @property Carbon $created_at
@@ -45,5 +47,10 @@ class User extends LaravelUser
     ];
     protected $casts = [
         "email_verified_at" => "datetime",
+        "is_active" => "boolean",
     ];
+
+    public function scopeActive(Builder $query){
+        return $query->where('active', true);
+    }
 }
