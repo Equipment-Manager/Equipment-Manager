@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\Auth\PermissionDeniedException;
 use App\Http\Helpers\ApiResponse;
+use App\Http\Helpers\Permissions;
 use App\Services\PermissionsService;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class PermissionsController extends ApiController
      */
     public function index(Request $request): JsonResponse
     {
-        if (!$request->user()->can("Manage permissions")) {
+        if (!$request->user()->can(Permissions::MANAGE_PERMISSIONS)) {
             throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
 

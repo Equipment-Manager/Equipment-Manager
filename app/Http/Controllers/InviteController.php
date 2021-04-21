@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\Auth\PermissionDeniedException;
 use App\Http\Helpers\ApiResponse;
+use App\Http\Helpers\Permissions;
 use App\Http\Requests\InviteRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Services\InviteService;
@@ -31,7 +32,7 @@ class InviteController extends ApiController
      */
     public function invite(InviteRequest $request): JsonResponse
     {
-        if (!$request->user()->can("Manage invites")) {
+        if (!$request->user()->can(Permissions::MANAGE_INVITES)) {
             throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
         $data = $request->only("email");
@@ -62,7 +63,7 @@ class InviteController extends ApiController
      */
     public function cancel(Request $request, string $token): JsonResponse
     {
-        if (!$request->user()->can("Manage permissions")) {
+        if (!$request->user()->can(Permissions::MANAGE_INVITES)) {
             throw new PermissionDeniedException($this->translator->get("exceptions.auth.forbidden"));
         }
         $this->inviteService->cancel($token);
