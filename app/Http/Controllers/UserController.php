@@ -10,8 +10,8 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Translation\Translator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -36,6 +36,7 @@ class UserController extends ApiController
             throw new PermissionDeniedException();
         }
         $users = User::all();
+
         return $this->apiResponse
             ->setData((array)new UserCollection($users))
             ->getResponse();
@@ -55,22 +56,16 @@ class UserController extends ApiController
     }
 
     /**
-     * @throws PermissionDeniedException
-     * @throws \Exception
+     * @throws PermissionDeniedException|Exception
      */
     public function deactivateUser(Request $request, User $user): JsonResponse
     {
         if (!$request->user()->can("Manage users")) {
             throw new PermissionDeniedException();
         }
-        try {
-            $this->userService->deactivate($user);
-        } catch (\Exception) {
-            throw new \Exception(
-                $this->translator->get("user.deactivate.fail"),
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-        }
+
+        $this->userService->deactivate($user);
+
         return $this->apiResponse
             ->setMessage($this->translator->get("user.deactivate.success"))
             ->setData((array)new UserResource($user))
@@ -85,9 +80,11 @@ class UserController extends ApiController
 
         return $this->apiResponse
             ->setMessage($this->translator->get("user.avatar.uploaded"))
-            ->setData([
-                "path" => $path,
-            ])
+            ->setData(
+                [
+                    "path" => $path,
+                ]
+            )
             ->getResponse();
     }
 }

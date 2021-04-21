@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Http\Helpers\Permissions;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -18,17 +19,17 @@ class RolesAndPermissionsSeeder extends Seeder
 
         Permission::create(
             [
-                "name" => "Manage invites",
+                "name" => Permissions::MANAGE_INVITES,
             ]
         );
         Permission::create(
             [
-                "name" => "Manage permissions",
+                "name" => Permissions::MANAGE_PERMISSIONS,
             ]
         );
         Permission::create(
             [
-                "name" => "Manage users",
+                "name" => Permissions::MANAGE_USERS,
             ]
         );
 

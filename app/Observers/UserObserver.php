@@ -11,6 +11,6 @@ class UserObserver
 {
     public function creating(User $user): void
     {
-        $user->avatar = Storage::url("images/default-avatar.png");
+        $user->avatar = "images/default-avatar.png";
     }
 }
