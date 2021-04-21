@@ -51,6 +51,6 @@ class User extends LaravelUser
     ];
 
     public function scopeActive(Builder $query){
-        return $query->where('active', true);
+        return $query->where('is_active', true);
     }
 }

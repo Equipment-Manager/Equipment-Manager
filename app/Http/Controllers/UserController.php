@@ -7,14 +7,22 @@ use App\Http\Helpers\ApiResponse;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Translation\Translator;
 
 class UserController extends ApiController
 {
-    public function __construct(ApiResponse $apiResponse)
+    protected Translator $translator;
+    protected UserService $userService;
+
+    public function __construct(ApiResponse $apiResponse, Translator $translator, UserService $userService)
     {
         parent::__construct($apiResponse);
+        $this->translator = $translator;
+        $this->userService = $userService;
     }
 
     /**
@@ -22,7 +30,7 @@ class UserController extends ApiController
      */
     public function index(Request $request): JsonResponse
     {
-        if(!$request->user()->can('Manage users')) {
+        if (!$request->user()->can('Manage users')) {
             throw new PermissionDeniedException();
         }
         $users = User::all();
@@ -36,7 +44,7 @@ class UserController extends ApiController
      */
     public function show(Request $request, User $user): JsonResponse
     {
-        if(!$request->user()->can('Manage users')) {
+        if (!$request->user()->can('Manage users')) {
             throw new PermissionDeniedException();
         }
         return $this->apiResponse
@@ -46,22 +54,36 @@ class UserController extends ApiController
 
     /**
      * @throws PermissionDeniedException
+     * @throws \Exception
      */
     public function deactivateUser(Request $request, User $user): JsonResponse
     {
-        if(!$request->user()->can('Manage users')) {
+        if (!$request->user()->can('Manage users')) {
             throw new PermissionDeniedException();
         }
         try {
-            $user->is_active = false;
-            $user->save();
-        } catch(\Exception) {
-            return $this->apiResponse->setFailureStatus(50)
-            ->setMessage("There was an problem while deactivating an user")
-            ->getResponse();
+            $this->userService->deactivate($user);
+        } catch (\Exception) {
+            throw new \Exception(
+                $this->translator->get('user.deactivate.fail'),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
         return $this->apiResponse
+            ->setMessage($this->translator->get('user.deactivate.success'))
             ->setData((array)new UserResource($user))
+            ->getResponse();
+    }
+
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $path = $request->file('avatar')->store("/images", "public");
+
+        $this->userService->updateAvatar($request->user(), $path);
+
+        return $this->apiResponse
+            ->setMessage($this->translator->get('user.avatar.uploaded'))
+            ->setData(['path' => $path])
             ->getResponse();
     }
 }

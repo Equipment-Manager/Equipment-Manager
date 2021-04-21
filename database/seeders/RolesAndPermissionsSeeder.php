@@ -16,17 +16,28 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create([
-            "name" => "Manage invites",
-        ]);
-        Permission::create([
-            "name" => "Manage permissions",
-        ]);
+        Permission::create(
+            [
+                "name" => "Manage invites",
+            ]
+        );
+        Permission::create(
+            [
+                "name" => "Manage permissions",
+            ]
+        );
+        Permission::create(
+            [
+                "name" => "Manage users"
+            ]
+        );
 
         /** @var Role $role */
-        $role = Role::create([
-            "name" => "Admin",
-        ]);
+        $role = Role::create(
+            [
+                "name" => "Admin",
+            ]
+        );
         $role->givePermissionTo(Permission::all());
 
         $user = User::first();

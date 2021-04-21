@@ -15,4 +15,10 @@ return [
     "auth" => [
         "forbidden" => "You are not allowed to do this action.",
     ],
+    "user" => [
+      "deactivate" => [
+          "fail" => "There was an error while deactivating a user.",
+          "success" => "User successfully deactivated.",
+      ]
+    ],
 ];

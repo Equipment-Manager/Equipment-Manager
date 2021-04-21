@@ -29,5 +29,6 @@ $router->delete("/roles/delete/{id}", [RolesController::class, "delete"])->middl
 $router->get("/users", [UserController::class, "index"])->middleware("auth:sanctum");
 $router->get("/user/{user}", [UserController::class, "show"])->middleware("auth:sanctum");
 $router->post("/users/deactivate/{user}", [UserController::class, "deactivateUser"])->middleware("auth:sanctum");
+$router->post("/user/avatar/upload", [UserController::class, "uploadImage"])->middleware("auth:sanctum");
 
 $router->get("/permissions", [PermissionsController::class, "index"])->middleware("auth:sanctum");
