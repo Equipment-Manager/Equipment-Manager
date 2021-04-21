@@ -40,7 +40,8 @@ class InviteService
 
         $user = User::create([
             "email" => $invite->email,
-            "name" => $data["name"],
+            "first_name" => $data["first_name"],
+            "last_name" => $data["last_name"],
             "password" => $this->hasher->make($data["password"]),
         ]);
 

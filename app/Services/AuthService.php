@@ -26,7 +26,7 @@ class AuthService
      */
     public function login(array $data): string
     {
-        $user = User::query()->where("email", $data["email"])->first();
+        $user = User::query()->active()->where("email", $data["email"])->first();
         if (!$user || !$this->hasher->check($data["password"], $user->password)) {
             throw new UnauthorizedException($this->translator->get("auth.failed"));
         }
