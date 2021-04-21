@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Exceptions\Auth\PermissionDeniedException;
@@ -10,8 +12,8 @@ use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Illuminate\Translation\Translator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends ApiController
 {
@@ -30,7 +32,7 @@ class UserController extends ApiController
      */
     public function index(Request $request): JsonResponse
     {
-        if (!$request->user()->can('Manage users')) {
+        if (!$request->user()->can("Manage users")) {
             throw new PermissionDeniedException();
         }
         $users = User::all();
@@ -44,7 +46,7 @@ class UserController extends ApiController
      */
     public function show(Request $request, User $user): JsonResponse
     {
-        if (!$request->user()->can('Manage users')) {
+        if (!$request->user()->can("Manage users")) {
             throw new PermissionDeniedException();
         }
         return $this->apiResponse
@@ -58,32 +60,34 @@ class UserController extends ApiController
      */
     public function deactivateUser(Request $request, User $user): JsonResponse
     {
-        if (!$request->user()->can('Manage users')) {
+        if (!$request->user()->can("Manage users")) {
             throw new PermissionDeniedException();
         }
         try {
             $this->userService->deactivate($user);
         } catch (\Exception) {
             throw new \Exception(
-                $this->translator->get('user.deactivate.fail'),
+                $this->translator->get("user.deactivate.fail"),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
         return $this->apiResponse
-            ->setMessage($this->translator->get('user.deactivate.success'))
+            ->setMessage($this->translator->get("user.deactivate.success"))
             ->setData((array)new UserResource($user))
             ->getResponse();
     }
 
     public function uploadImage(Request $request): JsonResponse
     {
-        $path = $request->file('avatar')->store("/images", "public");
+        $path = $request->file("avatar")->store("/images", "public");
 
         $this->userService->updateAvatar($request->user(), $path);
 
         return $this->apiResponse
-            ->setMessage($this->translator->get('user.avatar.uploaded'))
-            ->setData(['path' => $path])
+            ->setMessage($this->translator->get("user.avatar.uploaded"))
+            ->setData([
+                "path" => $path,
+            ])
             ->getResponse();
     }
 }

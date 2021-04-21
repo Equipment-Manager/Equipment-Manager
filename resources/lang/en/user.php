@@ -8,6 +8,6 @@ return [
         "success" => "User successfully deactivated.",
     ],
     "avatar" => [
-        "uploaded" => "Avatar was successfully uploaded."
-    ]
+        "uploaded" => "Avatar was successfully uploaded.",
+    ],
 ];

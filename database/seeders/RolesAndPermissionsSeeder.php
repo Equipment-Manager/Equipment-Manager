@@ -28,7 +28,7 @@ class RolesAndPermissionsSeeder extends Seeder
         );
         Permission::create(
             [
-                "name" => "Manage users"
+                "name" => "Manage users",
             ]
         );
 

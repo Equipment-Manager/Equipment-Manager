@@ -50,7 +50,8 @@ class User extends LaravelUser
         "is_active" => "boolean",
     ];
 
-    public function scopeActive(Builder $query){
-        return $query->where('is_active', true);
+    public function scopeActive(Builder $query)
+    {
+        return $query->where("is_active", true);
     }
 }
