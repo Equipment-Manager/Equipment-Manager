@@ -27,6 +27,8 @@ $router->middleware("auth:sanctum")->group(
 
         $router->get("/users", [UserController::class, "index"]);
         $router->get("/user/{user}", [UserController::class, "show"]);
+        $router->put("/user/edit/{user}", [UserController::class, "edit"]);
+        $router->post("/user/change-password", [UserController::class, "changePassword"]);
         $router->post("/users/deactivate/{user}", [UserController::class, "deactivateUser"]);
         $router->post("/user/avatar/upload", [UserController::class, "uploadImage"]);
 

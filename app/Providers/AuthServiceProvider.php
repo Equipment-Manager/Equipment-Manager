@@ -12,8 +12,6 @@ class AuthServiceProvider extends ServiceProvider
 {
     public function boot(Gate $gate): void
     {
-        $gate->after(function (User $user, string $ability): bool {
-            return $user->hasRole("Admin");
-        });
+        $gate->after(fn(User $user, string $ability): bool => $user->hasRole("Admin"));
     }
 }
