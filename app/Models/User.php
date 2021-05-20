@@ -34,7 +34,7 @@ class User extends LaravelUser
     use HasPermissions;
     use HasRoles;
 
-    public const DEFAULT_AVATAR = "images/default-avatar.png";
+    public const DEFAULT_AVATAR = "avatar/default-avatar.png";
 
     protected $fillable = [
         "name",
