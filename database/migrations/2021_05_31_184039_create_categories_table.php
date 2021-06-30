@@ -13,6 +13,7 @@ class CreateCategoriesTable extends Migration
         Schema::create("categories", function (Blueprint $table): void {
             $table->id();
             $table->string("name");
+            $table->json("category_properties");
             $table->timestamps();
         });
     }

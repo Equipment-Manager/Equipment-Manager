@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Castables\Equipment\EquipmentProperties;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +16,7 @@ class Equipment extends Model
     protected $fillable = ["name", "category_id", "serial_number", "properties", "user_id"];
 
     protected $casts = [
-        "properties" => "json",
+        "properties" => EquipmentProperties::class,
     ];
 
     public function category(): BelongsTo
