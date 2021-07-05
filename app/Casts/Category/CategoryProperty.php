@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Castables\Category;
+namespace App\Casts\Category;
 
 use Illuminate\Contracts\Support\Arrayable;
 

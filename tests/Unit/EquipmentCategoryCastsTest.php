@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Models\Category;
@@ -39,6 +41,6 @@ class EquipmentCategoryCastsTest extends TestCase
 
         $category = Category::first();
 
-        $this->assertEquals($properties, $category->category_properties->toArray());
+        $this->assertSame($properties, $category->category_properties->toArray());
     }
 }

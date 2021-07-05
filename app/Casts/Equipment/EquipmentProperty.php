@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Castables\Equipment;
+namespace App\Casts\Equipment;
 
 use Illuminate\Contracts\Support\Arrayable;
 
