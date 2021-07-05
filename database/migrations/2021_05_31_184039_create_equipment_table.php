@@ -16,7 +16,6 @@ class CreateEquipmentTable extends Migration
             $table->foreignId("category_id")->constrained("categories");
             $table->string("serial_number");
             $table->json("properties");
-            $table->foreignId("user_id")->constrained("users")->nullable();
             $table->timestamps();
         });
     }

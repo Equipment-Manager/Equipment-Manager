@@ -11,9 +11,7 @@ use Illuminate\Support\Collection;
 
 class EquipmentProperties implements Castable, Arrayable
 {
-    /**
-     * @var Collection|EquipmentProperty[]
-     */
+    /** @var Collection|EquipmentProperty[] */
     protected Collection $properties;
 
     protected int $currentTurn;

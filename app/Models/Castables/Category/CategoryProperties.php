@@ -11,9 +11,7 @@ use Illuminate\Support\Collection;
 
 class CategoryProperties implements Castable, Arrayable
 {
-    /**
-     * @var Collection|CategoryProperty[]
-     */
+    /** @var Collection|CategoryProperty[] */
     protected Collection $properties;
 
     public function __construct()
@@ -39,7 +37,7 @@ class CategoryProperties implements Castable, Arrayable
                 $categoryPropeties = new CategoryProperties();
 
                 foreach ($properties as $property) {
-                    $categoryPropeties->addProperty(new CategoryProperty($property["name"], $property["type"]));
+                    $categoryPropeties->addProperty(new CategoryProperty($property["name"], $property["type"], $property["unit"]));
                 }
 
                 return $categoryPropeties;

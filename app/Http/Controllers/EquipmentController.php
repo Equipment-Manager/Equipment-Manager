@@ -19,5 +19,4 @@ class EquipmentController extends ApiController
         $this->permissionsService = $permissionsService;
         $this->translator = $translator;
     }
-
 }
