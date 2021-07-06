@@ -33,4 +33,9 @@ class CategoryProperties implements Castable, Arrayable
     {
         return $this->properties->toArray();
     }
+
+    public function getCategoryProperties(): Collection
+    {
+        return $this->properties;
+    }
 }

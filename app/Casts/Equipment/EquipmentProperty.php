@@ -8,20 +8,30 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class EquipmentProperty implements Arrayable
 {
-    protected string $name;
-    protected string $value;
+    protected string $uuid;
+    protected mixed $value;
 
-    public function __construct(string $name, mixed $value)
+    public function __construct(string $uuid, mixed $value)
     {
-        $this->name = $name;
+        $this->uuid = $uuid;
         $this->value = $value;
     }
 
     public function toArray(): array
     {
         return [
-            "name" => $this->name,
+            "uuid" => $this->uuid,
             "value" => $this->value,
         ];
+    }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    public function getValue(): mixed
+    {
+        return $this->value;
     }
 }

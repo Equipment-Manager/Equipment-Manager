@@ -21,4 +21,10 @@ return [
             "success" => "User successfully deactivated.",
         ],
     ],
+    "equipment" => [
+        "properties" => [
+            "not_allowed" => "Provided property is not allowed in this category",
+            "wrong_type" => "Provided property does not have a valid type",
+        ]
+    ]
 ];

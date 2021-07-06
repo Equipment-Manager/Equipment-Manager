@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Exceptions\Mapper;
 
+use App\Exceptions\Equipment\PropertyIsNotAllowedException;
+use App\Exceptions\Equipment\WrongPropertyTypeException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -31,6 +33,8 @@ class ExceptionMapper
             NotFoundHttpException::class => Response::HTTP_NOT_FOUND,
             ValidationException::class => Response::HTTP_UNPROCESSABLE_ENTITY,
             QueryException::class => Response::HTTP_UNPROCESSABLE_ENTITY,
+            PropertyIsNotAllowedException::class => Response::HTTP_UNPROCESSABLE_ENTITY,
+            WrongPropertyTypeException::class => Response::HTTP_UNPROCESSABLE_ENTITY,
         ];
 
         foreach ($mapping as $class => $code) {
@@ -53,6 +57,8 @@ class ExceptionMapper
             ModelNotFoundException::class => $this->translator->get("exceptions.model.not_found"),
             RouteNotFoundException::class => $this->translator->get("exceptions.model.not_found"),
             NotFoundHttpException::class => $this->translator->get("exceptions.model.not_found"),
+            PropertyIsNotAllowedException::class => $this->translator->get("exceptions.equipment.properties.not_allowed"),
+            WrongPropertyTypeException::class => $this->translator->get("exceptions.equipment.properties.wrong_type"),
         ];
 
         foreach ($mapping as $class => $message) {
