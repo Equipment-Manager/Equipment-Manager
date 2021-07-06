@@ -8,7 +8,7 @@ use Blumilk\Codestyle\Configuration\Defaults\LaravelPaths;
 $paths = new LaravelPaths();
 
 $config = new Config(
-    paths: $paths->filter("tests")
+    paths: $paths->filter()
 );
 
 return $config->config();
