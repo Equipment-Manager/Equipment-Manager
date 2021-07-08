@@ -65,9 +65,3 @@ Run Behat:
 ```shell script
 docker-compose exec php ./vendor/bin/behat
 ```
-
-### Psalm
-Run Psalm:
-```shell script
-docker-compose exec php ./vendor/bin/psalm
-```

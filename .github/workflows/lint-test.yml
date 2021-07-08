@@ -1,4 +1,4 @@
-name: Build & Test the application
+name: Run tests and linters
 
 on:
   push:
@@ -7,9 +7,10 @@ on:
     branches: [develop]
 
 jobs:
-  build:
+  lint-test:
     runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.draft }}
+    name: Run tests and linters
 
     steps:
       - uses: actions/checkout@v2
@@ -17,13 +18,8 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Prepare environments for tests
-        run: ./.github/scripts/decrypt.sh
-        env:
-          TEST_KEY: ${{ secrets.TEST_KEY }}
-
       - name: Run the Docker containers
-        run: docker-compose -f docker-compose.yml up -d
+        run: docker-compose -f docker-compose-testing.yml up -d
 
       - name: Cache composer dependencies
         uses: actions/cache@v2
@@ -34,10 +30,10 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: docker-compose run -w /application php composer install --prefer-dist --no-progress --no-suggest
+        run: docker-compose -f docker-compose-testing.yml run php composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run Behat tests
-        run: docker-compose run php ./vendor/bin/behat --format=progress
+        run: docker-compose -f docker-compose-testing.yml run php composer behat
 
       - name: Run code style checker
-        run: docker-compose run php ./vendor/bin/ecs check
+        run: docker-compose -f docker-compose-testing.yml run php composer ecs
