@@ -1,11 +1,19 @@
-FROM php:7.4.9-fpm-alpine
+FROM ghcr.io/blumilksoftware/php:8.0.7.0
 
-ARG COMPOSER_VERSION
-ENV COMPOSER_HOME=/application/.composer
-ENV COMPOSER_MEMORY_LIMIT=-1
-RUN curl -sS https://getcomposer.org/installer | php -- --version=${COMPOSER_VERSION} --install-dir=/usr/local/bin --filename=composer 
+ARG XDEBUG_HOST=172.17.0.1
+ARG XDEBUG_PORT=9003
+ARG XDEBUG_INSTALL=false
+ARG XDEBUG_MODE=debug
+ARG XDEBUG_START_WITH_REQUEST=yes
+ARG XDEBUG_LOG_LEVEL=0
 
-RUN apk add --no-cache zip libzip-dev libpng-dev git
-
-RUN docker-php-ext-install mysqli pdo pdo_mysql bcmath zip gd 
-RUN docker-php-ext-configure zip
+RUN if [ ${XDEBUG_INSTALL} = true ]; then \
+    apk --no-cache add $PHPIZE_DEPS \
+    && pecl install xdebug-3.0.4 \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.client_host=${XDEBUG_HOST}" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.client_port=${XDEBUG_PORT}" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=${XDEBUG_MODE}" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.start_with_request=${XDEBUG_START_WITH_REQUEST}" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.log_level=${XDEBUG_LOG_LEVEL}" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+;fi
